@@ -5,7 +5,13 @@
 
 # Define a new `ui` variable. This variable should be assigned a `fluidPage()` layout
 # The `fluidPage()` layout should be passed the following:
-
+  ui <- fluidPage(
+    titlePanel("Cost Calculator"),
+    numericInput(inputID = "price", label = "Price (in dollars)", min = 0, value = 0),
+    numericInput(inputID = "quantity", label = "Quantity", min = 1, value = 1),
+    p(strong("Cost")),
+    textOutput(outputID = "Cost")
+  )
   
   # A `titlePanel()` layout with the text "Cost Calculator"
 
@@ -28,7 +34,12 @@
 
 # Define a `server` function (with appropriate arguments)
 # This function should perform the following:
-
+server <- function(input_list, output_list) {
+  output_list <- renderText({
+    total <- input_list$price * input_list$quantity
+    return(total)
+  })
+}
   
   # Assign a reactive `renderText()` function to the output's `cost` value
   # The reactive expression should return the input `price` times the `quantity`
